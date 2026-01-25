@@ -1,4 +1,4 @@
-```markdown
+
 # Jmix Application on OpenShift (Kubernetes Cluster)
 
 Tài liệu này mô tả **toàn bộ quy trình build – deploy – scale** một ứng dụng **Jmix** lên **OpenShift** với **Hazelcast cluster**, đảm bảo chạy **nhiều pod ổn định, không mất session**.
