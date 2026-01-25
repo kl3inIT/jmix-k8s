@@ -52,7 +52,6 @@ dependencies {
     }
     testImplementation 'io.jmix.flowui:jmix-flowui-test-assist'
     implementation 'org.postgresql:postgresql'
-    implementation 'org.hsqldb:hsqldb'
 }
 
 configurations.implementation {

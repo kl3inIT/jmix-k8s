@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jmix-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jmix-app
+  template:
+    metadata:
+      labels:
+        app: jmix-app
+    spec:
+      containers:
+        - name: jmix-app
+          image: kl3in/jmix-k8s:latest
+          ports:
+            - containerPort: 8080
+            - containerPort: 5701
+          env:
+            - name: HZ_NETWORK_JOIN_KUBERNETES_ENABLED
+              value: "true"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
