@@ -75,5 +75,5 @@ vaadin {
 }
 
 bootBuildImage {
-    imageName = 'kl3in/jmix-k8s'
+    imageName = 'kl3init/jmix-k8s'
 }

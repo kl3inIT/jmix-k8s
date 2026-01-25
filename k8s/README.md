@@ -246,7 +246,7 @@ roleRef:
 ### 1️⃣ Build & push image mới
 
 ```bash
-./gradlew bootBuildImage
+./gradlew "-Pvaadin.productionMode=true" bootBuildImage
 docker tag kl3in/jmix-k8s:latest kl3init/jmix-k8s:1.0.1
 docker push kl3init/jmix-k8s:1.0.1
 ```
@@ -254,7 +254,9 @@ docker push kl3init/jmix-k8s:1.0.1
 ### 2️⃣ Update image trong Deployment
 
 ```bash
-oc set image deployment/jmix-app jmix-app=kl3in/jmix-k8s:1.0.1
+oc set image deployment/jmix-k8s jmix-k8s=docker.io/kl3init/jmix-k8s:1.0.1
+oc rollout restart deployment jmix-k8s
+
 ```
 
 ### 3️⃣ Theo dõi rollout
