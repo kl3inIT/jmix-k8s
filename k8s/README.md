@@ -304,3 +304,33 @@ Members {size:3, ver:3}
 * Stack: Jmix + Spring Boot + Hazelcast
 * Platform: OpenShift / Kubernetes
 
+oc set env deployment/jmix-app \
+MAIN_DATASOURCE_URL="$(oc get configmap jmix-secret -n kl3init-dev -o jsonpath='{.data.MAIN_DATASOURCE_URL}')" \
+MAIN_DATASOURCE_USERNAME="$(oc get configmap jmix-secret -n kl3init-dev -o jsonpath='{.data.MAIN_DATASOURCE_USERNAME}')" \
+MAIN_DATASOURCE_PASSWORD="$(oc get configmap jmix-secret -n kl3init-dev -o jsonpath='{.data.MAIN_DATASOURCE_PASSWORD}')" \
+SPRING_PROFILES_ACTIVE=k8s \
+HZ_NETWORK_JOIN_KUBERNETES_ENABLED=true \
+-n kl3init-dev
+
+oc patch service jmix-app \
+-p '{
+"spec": {
+"ports": [
+{
+"name": "http",
+"port": 8080,
+"targetPort": 8080
+},
+{
+"name": "hazelcast",
+"port": 5701,
+"targetPort": 5701
+}
+]
+}
+}' \
+-n kl3init-dev
+
+oc patch deployment jmix-app \
+-p '{"spec":{"template":{"spec":{"serviceAccountName":"hazelcast-sa"}}}}' \
+-n kl3init-dev

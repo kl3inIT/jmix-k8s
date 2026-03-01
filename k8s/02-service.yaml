@@ -1,10 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: jmix-app-service
+  name: jmix-k8s
+  namespace: kl3init-dev
 spec:
+  type: ClusterIP
   selector:
-    app: jmix-app
+    app: jmix-k8s
   ports:
     - name: http
       port: 8080

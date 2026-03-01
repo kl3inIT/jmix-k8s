@@ -1,0 +1,1 @@
+oc adm policy add-scc-to-user anyuid -z default -n kl3init-dev
