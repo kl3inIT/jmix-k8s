@@ -2,10 +2,11 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: jmix-app
+  namespace: kl3init-dev
 spec:
   to:
     kind: Service
-    name: jmix-app-service
+    name: jmix-app
   port:
     targetPort: http
   tls:

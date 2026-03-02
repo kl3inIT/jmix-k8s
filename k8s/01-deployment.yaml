@@ -1,54 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jmix-k8s
+  name: jmix-app
   namespace: kl3init-dev
   labels:
-    app: jmix-k8s
+    app: jmix-app
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: jmix-k8s
+      app: jmix-app
 
   template:
     metadata:
       labels:
-        app: jmix-k8s
+        app: jmix-app
 
     spec:
       serviceAccountName: hazelcast-sa
 
       containers:
-        - name: jmix-k8s
-          image: docker.io/kl3init/jmix-k8s:latest
+        - name: jmix-app
+          image: docker.io/kl3init/jmix-k8s:1.0.7
           imagePullPolicy: Always
 
           ports:
             - containerPort: 8080
+            - containerPort: 5701
 
-          env:
-            - name: MAIN_DATASOURCE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: jmix-secret
-                  key: MAIN_DATASOURCE_URL
-
-            - name: MAIN_DATASOURCE_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  name: jmix-secret
-                  key: MAIN_DATASOURCE_USERNAME
-
-            - name: MAIN_DATASOURCE_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: jmix-secret
-                  key: MAIN_DATASOURCE_PASSWORD
-
-            - name: SPRING_PROFILES_ACTIVE
-              value: k8s
-
-            - name: HZ_NETWORK_JOIN_KUBERNETES_ENABLED
-              value: "true"
+          envFrom:
+            - configMapRef:
+                name: jmix-config
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
