@@ -5,4 +5,4 @@ hazelcast:
         enabled: false
       kubernetes:
         enabled: false
-        service-name: jmix-k8s
+        service-name: jmix-app

@@ -45,7 +45,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'io.jmix.notifications:jmix-notifications-starter'
     implementation 'io.jmix.notifications:jmix-notifications-flowui-starter'
-
+    implementation 'io.jmix.oidc:jmix-oidc-starter'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
