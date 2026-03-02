@@ -10,7 +10,8 @@ metadata:
   name: hazelcast-role
   namespace: kl3init-dev
 rules:
-  - apiGroups: [""]
+  - apiGroups:
+      - ''
     resources:
       - pods
       - endpoints
