@@ -24,6 +24,13 @@ spec:
         - name: jmix-app
           image: docker.io/kl3init/jmix-k8s:1.0.7
           imagePullPolicy: Always
+          volumeMounts:
+            - name: liquibase-changelog
+              mountPath: /config/liquibase/changelog.xml
+              subPath: changelog.xml
+            - name: liquibase-changelog-files
+              mountPath: /config/liquibase/changelog
+              readOnly: true
 
           ports:
             - containerPort: 8080
@@ -31,8 +38,16 @@ spec:
 
           envFrom:
             - configMapRef:
-                name: jmix-config
+                name: jmix-secret
           lifecycle:
             preStop:
               exec:
                 command: ["sh", "-c", "sleep 10"]
+
+      volumes:
+        - name: liquibase-changelog
+          configMap:
+            name: jmix-liquibase-changelog
+        - name: liquibase-changelog-files
+          configMap:
+            name: jmix-liquibase-changelog-files

@@ -171,19 +171,22 @@ image: docker.io/kl3init/jmix-k8s:1.0.7  # Thay bằng version mới nhất
 # 1. RBAC và ServiceAccount (phải apply trước)
 oc apply -f k8s/04-rbac-hazelcast.yaml
 
-# 2. ConfigMap (chứa DB config và env vars)
+# 2. ConfigMap (chứa DB config, env vars)
 oc apply -f k8s/05-jmix-secret.yaml
 
-# 3. Deployment (Jmix app)
+# 3. ConfigMap (mount Liquibase master changelog.xml)
+oc apply -f k8s/07-liquibase-changelog-configmap.yaml
+
+# 4. Deployment (Jmix app)
 oc apply -f k8s/01-deployment.yaml
 
-# 4. Service (expose port 8080 và 5701)
+# 5. Service (expose port 8080 và 5701)
 oc apply -f k8s/02-service.yaml
 
-# 5. Route (OpenShift route)
+# 6. Route (OpenShift route)
 oc apply -f k8s/03-route.yaml
 
-# 6. Nginx (optional - nếu dùng sticky session)
+# 7. Nginx (optional - nếu dùng sticky session)
 oc apply -f k8s/10-nginx-jmix-config.yaml
 ```
 
